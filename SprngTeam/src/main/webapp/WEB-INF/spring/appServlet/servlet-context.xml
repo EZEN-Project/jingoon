@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven /><!-- @Controller를 사용하게한다  -->
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<!-- 파일 업로드로 들어오는 데이터를 처리하는 객체 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property value="10485760" name="maxUploadSize"></beans:property><!-- byte, 수식x -->
+	</beans:bean>
+	
+	<!-- 업로드된 파일의 저장 위치 지정 -->
+	<beans:bean class="java.lang.String" id="uploadPath">
+      <beans:constructor-arg value="\\resources\\upload"></beans:constructor-arg>
+  	</beans:bean>
+	
+  	<!-- 인터셉터 객체(컨트롤러의 핸들러 실행 전후에 실행  -->
+
+  	<beans:bean id="logininterceptor" class="kr.co.interceptor.LoginInterceptor"></beans:bean>
+	<beans:bean id="authinterceptor" class="kr.co.interceptor.AuthInterceptor"></beans:bean>
+	
+	<!-- 인터셉터 객체의 사용, 사용객체id(ref)- 객체사용위치(mapping) -->
+	<interceptors>
+		
+		<!-- 로그인  -->
+		<interceptor>
+			<mapping path="/member/loginPost"/>		
+			<beans:ref bean="logininterceptor"/>
+		</interceptor>
+		<!-- 로그인인증 -->
+		<interceptor>
+			<mapping path="/board/insert"/>
+			<mapping path="/board/update"/>
+			<mapping path="/board/delete"/>
+			<beans:ref bean="authinterceptor"/>
+		</interceptor>
+		
+	</interceptors>
+
+	
+	<context:component-scan base-package="kr.co.naver" />
+	<context:component-scan base-package="kr.co.ezen" />
+	<context:component-scan base-package="kr.co.controller" />
+	
+</beans:beans>
