@@ -26,25 +26,19 @@ public class cartTest {
 	
 	@Test
 	public void testCartPlus() {
-		CartVO vo = new CartVO(1001, 1004, 2);
+		CartVO vo = new CartVO(0, 1001, 1015, 2, 6000, 3000);
 		cartDAO.insert(vo);
 	}
 	
 	@Test
 	public void testCartSearch() {
-		int a = cartDAO.cartSearch(new CartVO(1001, 1006, 2));
+		int a = cartDAO.cartSearch(new CartVO(0, 1001, 1015, 2, 6000, 3000));
 		System.out.println(a);
 	}
 	
 	@Test
-	public void testCartAmountPlus() {
-		int b = cartDAO.cartAmountPlus(new CartVO(1001, 1004, 2));
-		System.out.println(b);
-	}
-
-	@Test
 	public void testCartDelete() {
-		int suc = cartDAO.delete(1002);
+		int suc = cartDAO.delete(1015);
 		System.out.println(suc);
 	}
 }

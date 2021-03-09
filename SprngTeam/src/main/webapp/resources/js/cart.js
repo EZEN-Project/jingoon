@@ -45,7 +45,8 @@ function cartInsert(sellboardNo, amount){
 		},
 		data : JSON.stringify({
 			sellboardNo : sellboardNo,
-			amount : amount
+			amount : amount,
+			price : price
 		}),
 		dataType : "text",
 		success : function(result){
@@ -60,7 +61,7 @@ function cartAmountPlusOne(that){
 	var cartNo= that.attr("data-cartNo")
 	$.ajax({
 		type : "put",
-		url : "/cart/cartAmountPlusOne",
+		url : "/cart/cartAmountPlus",
 		headers : {
 			"Content-Type" : "application/Json",
 			"X-HTTP-Method-Override" : "put"  
@@ -69,20 +70,43 @@ function cartAmountPlusOne(that){
 			cartNo : cartNo
 		}),
 		dataType : "text",
-		success : function(result){
-			that.parent().prev().text(`구매 개수: ${result}개`);
+		success : function(amount){
+			that.parent().prev().text(`구매 개수: ${amount}개`);
+			var price = that.parent().prev().prev().attr("data-price");
+			that.parent().next().next().text(`상품 구매 가격: ${price*amount}원`);
+			if(amount==2){
+				that.parent().next().show();
+			}
 			//총가격 갱신
 			getTotalPrice();
 		}
 	});
 }
 
+// 상품 개수 가져오기
+function getAmount(cartNo){
+	$.getJSON("/cart/getAmount/"+ cartNo, function(amount){
+		if(amount<=1){
+			return;
+		}
+	});
+}
+
+
 // 장바구니 상품 개수 감소
 function cartAmountMinusOne(that){
 	var cartNo= that.attr("data-cartNo")
+	$.getJSON("/cart/getAmount/"+ cartNo, function(amount){
+		if(amount<=1){
+			alert("1개 이하로 줄일 수 없습니다.");
+			that.parent().hide();
+			return;
+		}
+	});
+	
 	$.ajax({
 		type : "put",
-		url : "/cart/cartAmountMinusOne",
+		url : "/cart/cartAmountMinus",
 		headers : {
 			"Content-Type" : "application/Json",
 			"X-HTTP-Method-Override" : "put"  
@@ -91,10 +115,11 @@ function cartAmountMinusOne(that){
 			cartNo : cartNo
 		}),
 		dataType : "text",
-		success : function(result){
-			that.parent().prev().prev().text(`구매 개수: ${result}개`);
+		success : function(amount){
+			that.parent().prev().prev().text(`구매 개수: ${amount}개`);
 			var price = that.parent().prev().prev().prev().attr("data-price");
-			that.parent().prev().prev().prev().text(`${price*result}`);
+			that.parent().next().text(`상품 구매 가격: ${price*amount}원`);
+			
 			//총가격 갱신
 			getTotalPrice();
 		}
@@ -135,21 +160,19 @@ function getCartList(){
 			var cart = data.cartList[i];
 			var sellNo = cart.sellboardNo;
 			var sellboard = data[sellNo];
-			var amount = cart.amount;
-			var totalPrice = cart.amount * sellboard.price;
 			str += `<li>
 						<img alt="상품이미지" src="${sellboard.img}">
-						<span>상품 번호: ${sellNo}</span>
-						<span>상품 설명: ${sellboard.content}</span>
-						<span data-price="${sellboard.price}">상품 가격: ${sellboard.price} 원</span>
-						<span>구매 개수: ${amount}개</span>
+						<span>상품 번호: ${cart.sellboardNo}</span>
+						<span>상품 이름: ${sellboard.title}</span>
+						<span data-price="${sellboard.price}">상품 가격: ${cart.price} 원</span>
+						<span>구매 개수: ${cart.amount}개</span>
 						<button type="button" class="btn btn-default btn-xs">
 						  <span data-cartNo="${cart.cartNo}" class="glyphicon glyphicon-plus plus" aria-hidden="true"></span>
 						</button>
 						<button type="button" class="btn btn-default btn-xs">
-						  <span data-cartNo="${cart.cartNo}" data-amount="${amount}" class="glyphicon glyphicon-minus minus" aria-hidden="true"></span>
+						  <span data-cartNo="${cart.cartNo}" data-amount="${cart.amount}" class="glyphicon glyphicon-minus minus" aria-hidden="true"></span>
 						</button>
-						<span class="tPrice" date-tPrice="${totalPrice}">상품 구매 가격: ${cart.amount * sellboard.price}원</span>
+						<span class="tPrice" date-aPrice="${cart.aPrice}">상품 구매 가격: ${cart.aPrice}원</span>
 						
 						<button data-cartNo="${cart.cartNo}" class="cartDelete">삭제</button>
 					</li>

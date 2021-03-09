@@ -16,22 +16,17 @@
 	
 	<!-- 장바구니 입력 -->
 	<insert id="insert">
-		insert into cart (cartNo, memberNo, sellboardNo, amount) 
-		values ((SELECT NVL2(MAX(cartNo), MAX(cartNo)+1, 1) FROM cart),#{memberNo},#{sellboardNo}, #{amount})
+		insert into cart (cartNo, memberNo, sellboardNo, amount, aPrice, price) 
+		values ((SELECT NVL2(MAX(cartNo), MAX(cartNo)+1, 1) FROM cart),#{memberNo},#{sellboardNo}, #{amount}, #{aPrice}, #{price})
 		<selectKey order="AFTER" keyProperty="cartNo" resultType="Integer">
 			select max(cartNo) from cart
 		</selectKey>
 	</insert>
 	
 	<!-- 장바구니 수량 수정 -->
-	<update id="cartAmountPlus">
-		update cart set amount = amount + #{amount} where memberNo = #{memberNo} and sellboardNo = #{sellboardNo}
-	</update>
-	<update id="cartAmountPlusOne">
-		update cart set amount = amount +1 where cartNo = #{cartNo}
-	</update>
-	<update id="cartAmountMinusOne">
-		update cart set amount = amount -1 where cartNo = #{cartNo}
+	<update id="cartUpdate">
+		update cart set amount = #{amount}, aPrice = #{aPrice} 
+		where cartNo = #{cartNo}
 	</update>
 	
 		
@@ -51,6 +46,16 @@
 	<!-- 장바구니 상품 일치조회 -->
 	<select id="cartSearch" resultType="Integer">
 		select cartNo from cart where memberNo = #{memberNo} and sellboardNo = #{sellboardNo}
+	</select>
+	
+	<!-- 결제가격 조회 -->
+	<select id="getaPrice" resultType="Integer">
+		select aPrice from cart where cartNo = #{cartNo}
+	</select>
+	
+	<!-- 장바구니 상품 가격 조회 -->
+	<select id="getPrice" resultType="Integer">
+		select price from cart where cartNo = #{cartNo}
 	</select>
 	
 	

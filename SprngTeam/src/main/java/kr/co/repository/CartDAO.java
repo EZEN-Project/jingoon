@@ -14,15 +14,15 @@ public interface CartDAO {
 
 	int cartSearch(CartVO cartVO);	// 장바구니 상품 조회
 
-	int cartAmountPlus(CartVO cartVO);	// 장바구니 상품 수량 증가(추가)
-
 	int getAmount(int cartNo);	// 장바구니 상품의 수량 조회
 
 	int delete(int sellboardNo);	// 장바구니 상품의 삭제
 
-	void cartAmountPlusOne(int cartNo);	// 장바구니 상품 수량 증가
+	int getaPrice(int cartNo);	// 상품 결제가격 조회
 
-	void cartAmountMinusOne(int cartNo);// 장바구니 상품 수량 감소
+	int cartUpdate(CartVO cartVO);	// 장바구니 상품 변경/추가(수량,가격) 
+
+	int getPrice(int cartNo);	// 장바구니 상품 가격 조회
 
 	
 }

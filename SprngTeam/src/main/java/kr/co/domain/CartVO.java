@@ -18,25 +18,57 @@ public class CartVO implements Serializable{
 	private int memberNo;
 	private int sellboardNo;
 	private int amount;
+	private int aPrice;
+	private int price;
 	
 	public CartVO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CartVO(int cartNo, int memberNo, int sellboardNo, int amount) {
+	
+
+	public CartVO(int memberNo, int sellboardNo, int amount, int aPrice, int price) {
+		super();
+		this.memberNo = memberNo;
+		this.sellboardNo = sellboardNo;
+		this.amount = amount;
+		this.aPrice = aPrice;
+		this.price = price;
+	}
+
+	public CartVO(int cartNo, int memberNo, int sellboardNo, int amount, int aPrice, int price) {
 		super();
 		this.cartNo = cartNo;
 		this.memberNo = memberNo;
 		this.sellboardNo = sellboardNo;
 		this.amount = amount;
+		this.aPrice = aPrice;
+		this.price = price;
 	}
 
-	public CartVO(int memberNo, int sellboardNo, int amount) {
-		super();
-		this.memberNo = memberNo;
-		this.sellboardNo = sellboardNo;
-		this.amount = amount;
+
+	public int getPrice() {
+		return price;
 	}
+
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+
+
+	public int getaPrice() {
+		return aPrice;
+	}
+
+
+
+	public void setaPrice(int aPrice) {
+		this.aPrice = aPrice;
+	}
+
+
 
 	public int getCartNo() {
 		return cartNo;
