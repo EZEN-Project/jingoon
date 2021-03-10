@@ -3,6 +3,7 @@ package kr.co.controller;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,21 @@ public class CartRestController {
 
 	@Inject
 	private CartService cartService;
+	
+	// 결제하기 성공1, 실패0 리턴
+	@RequestMapping(value = "/pay",method = RequestMethod.POST)
+	public int pay(@RequestBody Map<String, Object> map, HttpSession session) {
+		String pw =(String) map.get("pw");
+		//LoginDTO login session.getAttribute("login");
+//		if(!pw.equals(login.getPw)) {
+//			return 0;
+//		}
+		System.out.println(pw);// 입력 pw확인
+		int success = cartService.cartPay(map);
+		
+		return success;
+	}
+	
 	
 	// 상품 개수 조회
 	@RequestMapping(value = "/getAmount/{cartNo}",method = RequestMethod.GET)
@@ -44,8 +60,7 @@ public class CartRestController {
 		int amount = Integer.valueOf(getAmount);
 		String getPrice = map.get("price").toString();
 		int price = Integer.valueOf(getPrice);
-		String getaPrice = map.get("aPrice").toString();
-		int aPrice = Integer.valueOf(getaPrice);
+		int aPrice = amount*price;
 			
 		CartVO cartVO = new CartVO(memberNo, sellboardNo, amount, aPrice, price);
 			

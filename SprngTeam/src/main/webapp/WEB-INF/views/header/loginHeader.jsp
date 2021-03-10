@@ -17,7 +17,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
-<script src="/resources/js/cart.js?vs=0.16" type="text/javascript"></script>
+<script src="/resources/js/cart.js?vs=0.22" type="text/javascript"></script>
 </head>
 <body>
 	<div class="row text-right">
@@ -34,8 +34,14 @@
 		<button class="btn btn-primary btn-md goCart" type="button">
 			<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
 		 	 장바구니 <span id="cartCount" class="badge"></span>
-		</button>	
-	</div>
+		</button>
+<!-- 마이페이지 버튼 -->		
+		<a href="/mypage/mypage.jsp"><button class="btn btn-primary btn-md" type="button">
+			<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+		 	 마이페이지
+		</button></a>	
+	
+	</div><!-- row -->
 
 <script type="text/javascript">
 	$(document).ready(function() {

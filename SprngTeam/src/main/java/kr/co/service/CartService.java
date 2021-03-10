@@ -25,4 +25,6 @@ public interface CartService {
 	int getaPrice(int cartNo);	// 상품 결제가격 조회
 
 	int getTotalPrice(int memberNo);	// 장바구니 전체 상품 가격 계산
+
+	int cartPay(Map<String, Object> map);	// 장바구니 결제 진행
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.domain.CartVO;
 import kr.co.repository.CartDAO;
@@ -61,11 +62,7 @@ public class CartServiceImpl implements CartService {
 		// int bcount = sellboardDAO.getbcount(sellboardNo);
 		int bcount = 1000; // 임시로 제한개수 1000개 설정
 
-		// int aPrice = sellboardDAO.getPrice(sellboardNo) * amount;
-		int price = 9000; // 9000은 테스트값
-		int amount = cartVO.getAmount();// 추가할 amount
-		int aPrice = amount * price;
-		cartVO.setaPrice(aPrice);
+		
 
 		int success = 0;
 		int cartNo = cartDAO.cartSearch(cartVO);
@@ -76,20 +73,21 @@ public class CartServiceImpl implements CartService {
 				return "판매상품 수량이 부족합니다";
 			}
 
-		} else { // 기존 상품 이면 amounnt 증가
+		} else { // 기존 상품 이면 amounnt, aPrice 증가
+			int amount = cartVO.getAmount();// 추가할 amount
 			amount = amount + cartDAO.getAmount(cartNo);
 			if (amount <= bcount) {
 				cartVO.setCartNo(cartNo);
 				cartVO.setAmount(amount);
-				aPrice = amount * price;
-				cartVO.setaPrice(amount);
+				int aPrice = amount * cartVO.getPrice();
+				cartVO.setaPrice(aPrice);
 				success = cartDAO.cartUpdate(cartVO);
 			} else {
 				return "판매상품 수량이 부족합니다";
 			}
 		}
 
-		return success >= 1 ? "장바구니에 상품이 " + cartVO.getAmount() + "개 추가되었습니다." : "장바구니에 담기가 실패하였습니다.";
+		return success >= 1 ? "장바구니에 상품이 " + cartVO.getAmount() + "개가 되었습니다" : "장바구니에 담기가 실패하였습니다.";
 
 	}
 
@@ -183,6 +181,24 @@ public class CartServiceImpl implements CartService {
 			totalPrice += cartVO.getaPrice();
 		}
 		return totalPrice;
+	}
+
+	// 장바구니 결제 진행
+	// 1.회원정보 가져오기 - 비밀번호 일치 확인
+	// 2.회원정보 에서 포인트 확인
+	// 3.장바구니에서 정보 가져오기 - 총 가격 확인
+	// 4.포인트와 결제가격 비교
+	// 5.포인트에서 결제가격을 빼서 포인트 업데이트
+	// 6.장바구니의 정보로 판매정보 입력
+	// 7.장바구니 삭제
+	// 8. 6,7,8 트렌젝션 적용
+	@Transactional
+	@Override
+	public int cartPay(Map<String, Object> map) {
+				
+		
+		// 0실패 1성공
+		return 0;
 	}
 
 
