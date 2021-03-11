@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.sellboard">
+	
+   <insert id="insert">
+   	INSERT INTO sellboard (bnum, title, writer, content, cost, price, bcount)
+		VALUES ((SELECT NVL2(MAX(bnum), MAX(bnum)+1, 1) FROM sellboard), 
+        #{title}, 
+        #{writer},
+        #{content},
+        #{cost},
+        #{price},
+        #{bcount})
+        <selectKey order="AFTER" keyProperty="bnum" resultType="Integer">
+        	SELECT MAX(bnum) FROM sellboard
+        </selectKey>
+   </insert>
+   
+   <select id="read" resultType="kr.co.domain.SellBoardVO">
+	SELECT * FROM sellboard WHERE bnum = #{bnum}   
+   </select>
+   
+	<select id="getAttaches" resultType="string">
+      SELECT fullName FROM attach WHERE bnum = #{bnum} order by regdate ASC
+	</select>
+	
+	<insert id="addAttach">
+		INSERT INTO attach (id, fullName, bnum) 
+		VALUES 
+		((SELECT NVL2(MAX(id), MAX(id)+1, 1) FROM attach)
+		 , #{fullName}, #{bnum})
+	</insert>
+	
+	
+	<select id="updateUI" resultType="kr.co.domain.SellBoardVO">
+		SELECT * FROM sellboard WHERE bnum = #{bnum}
+	</select>
+	
+	<update id="update">
+		UPDATE sellboard SET 
+		writer = #{writer}, title = #{title}, content = #{content}, cost = #{cost}, price = #{price}, bcount = #{bcount}
+		WHERE bnum = #{bnum}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM sellboard WHERE bnum = #{bnum}
+	</delete>
+</mapper>
