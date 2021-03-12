@@ -17,7 +17,8 @@ import kr.co.service.CartService;
 @RestController
 @RequestMapping("/cart")
 public class CartRestController {
-
+	
+	
 	@Inject
 	private CartService cartService;
 	
@@ -34,7 +35,7 @@ public class CartRestController {
 //			return 0;
 //		}
 		//map.put("id", login.getId());
-		System.out.println(pw);// 입력 pw확인
+		System.out.println("입력 pw확인: "+pw);// 입력 pw확인
 		int success = cartService.cartPay(map);
 		
 		return success;
@@ -43,7 +44,8 @@ public class CartRestController {
 	
 	// 상품 개수 조회
 	@RequestMapping(value = "/getAmount/{cartNo}",method = RequestMethod.GET)
-	public int getAmount(@PathVariable("cartNo") int cartNo) {
+	public int getAmount(@PathVariable("cartNo") String cartNoStr) {
+		int cartNo = Integer.valueOf(cartNoStr);
 		return cartService.getAmount(cartNo);
 	}
 	
@@ -92,6 +94,14 @@ public class CartRestController {
 	public int delete(@RequestBody Map<String, Object> map) {
 		int cartNo = Integer.parseInt(map.get("cartNo").toString());
 		int success = cartService.delete(cartNo);
+		return success;
+	}
+	// 장바구니 상품 삭제
+	@RequestMapping(value = "/allDelete", method = RequestMethod.GET)
+	public int allDelete() {
+		//int memberNo = memberService.getMnum(id);
+		int memberNo = 1001;
+		int success = cartService.allDelete(memberNo);
 		return success;
 	}
 	

@@ -15,6 +15,5 @@
 			select max(sellNum) from sell
 		</selectKey>
 	</insert>
-	
-	
+		
 </mapper>

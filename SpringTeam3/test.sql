@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 -- 장바구니 테이블 
 create table cart(
@@ -18,7 +17,7 @@ alter table cart add price number;
 -- Test 장바구니 데이터 입력
 insert into cart (cartNo, memberNo, sellboardNo, amount, aPrice, price) values ('1', '1001', '1001', '2', '18000', '9000')
 
-select * from cart
+select * from cart 
 delete from cart
 
 -- 결제 테이블
@@ -38,22 +37,19 @@ alter table sell add img varchar2(200)
 
 select * from sell
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-select *from attach
-
+-- 상품 게시글 
+create table sellboard(
+bnum number(6) primary key,
+title varchar2(300) not null,
+writer varchar2(300) not null,
+content varchar2(300) not null,
+cost number(10) DEFAULT 0,
+price number(10) DEFAULT 0,
+veiwcnt number(6) default 0,
+bcount number(6) default 1
+)
+select * from sellboard
+-- 이미지 path 테이블
 create table attach(
 id number(8) primary key,
 fullname varchar2(200) not null,
@@ -88,35 +84,11 @@ veiwcnt number(6) default 0,
 regdate DATE DEFAULT SYSDATE,
 updatedate DATE DEFAULT SYSDATE
 )
-create table sellboard(
-bnum number(6) primary key,
-title varchar2(300) not null,
-writer varchar2(300) not null,
-content varchar2(300) not null,
-cost number(10) DEFAULT 0,
-price number(10) DEFAULT 0,
-veiwcnt number(6) default 0,
-bcount number(6) default 1
-)
-select *from sellboard
-delete from sellboard
-regdate DATE DEFAULT SYSDATE,
-updatedate DATE DEFAULT SYSDATE,
-gnum number(6)
-)
-create table sell(
-sellnum number(6) primary key,
-goodsnum number(6),
-buynum number(6),
-sellDate date default sysdate
-)
->>>>>>> 9cc552a79b8553233bd170c5f82c3b3cccf3ac32
 
-select selldate, sum(aprice)
-        from ((SELECT to_char(selldate, 'yyyy-mm-dd') selldate,aprice FROM sell))
+
+select selldate, sum(aprice) as total
+        from ((SELECT to_char(selldate, 'yy/fmmm/dd') selldate,aprice FROM sell))
         GROUP BY selldate order by selldate asc
-        
-SELECT LISTAGG(selldate, "*", sum(aprice)) AS hero_string FROM hero_collection;
 
 
 

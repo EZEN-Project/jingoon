@@ -44,11 +44,6 @@ public class CartDAOImpl implements CartDAO{
 		return cartNo;
 	}
 
-	@Override
-	public int getAmount(int cartNo) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(NS+".getAmount", cartNo);
-	}
 
 	@Override
 	public int delete(int cartNo) {
@@ -58,20 +53,14 @@ public class CartDAOImpl implements CartDAO{
 
 
 	@Override
-	public int getaPrice(int cartNo) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(NS+".getaPrice", cartNo);
-	}
-
-	@Override
 	public int cartUpdate(CartVO cartVO) {
 		// TODO Auto-generated method stub
 		return sqlSession.update(NS+".cartUpdate", cartVO);
 	}
 
 	@Override
-	public int getPrice(int cartNo) {
+	public CartVO getCart(int cartNo) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne(NS+".getPrice", cartNo);
+		return sqlSession.selectOne(NS+".getCart", cartNo);
 	}
 }

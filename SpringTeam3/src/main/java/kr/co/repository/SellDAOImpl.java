@@ -26,7 +26,7 @@ public class SellDAOImpl implements SellDAO{
 		sqlSession.insert(NS+".insert", sellVO);
 		
 	}
-	
+
 	
 	
 }

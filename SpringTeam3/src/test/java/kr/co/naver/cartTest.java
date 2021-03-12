@@ -20,14 +20,13 @@ public class cartTest {
 	
 	@Test
 	public void testCartCount() {
-		int count = cartDAO.getCartCount(1001);
+		int count = cartDAO.getCartCount(1002);
 		System.out.println(count);
 	}
 	
 	@Test
 	public void testCartPlus() {
-		CartVO vo = new CartVO(0, 1001, 1015, 2, 6000, 3000);
-		cartDAO.insert(vo);
+		
 	}
 	
 	@Test
@@ -38,7 +37,6 @@ public class cartTest {
 	
 	@Test
 	public void testCartDelete() {
-		int suc = cartDAO.delete(1015);
-		System.out.println(suc);
+		
 	}
 }

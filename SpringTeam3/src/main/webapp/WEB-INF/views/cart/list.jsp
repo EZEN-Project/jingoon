@@ -25,12 +25,15 @@
 	<div class="container">
 	
 		<div class="row">
-			<a class="" href="">쇼핑</a>
+			<h1 class="jumbotron" align='center'>장바구니</h1>
 		</div><!--row  -->
+		<div class="row list-group" align="right">
+			<button class="btn btn-danger" id="allDelete" title="장바구니 비우기">모두 삭제</button>
+		</div>
 		
 		<!-- 장바구니 리스트 -->
 		<div class="row list-group cartList">
-			<h1 class="jumbotron" align='center'>장바구니</h1>
+			
 		</div><!--row  -->
 
 		<!-- 총 가격  -->
@@ -40,23 +43,21 @@
 		<div class="row">
 			<jsp:include page="pay.jsp"></jsp:include>
 		</div>
-
+		
 	</div><!-- container -->
 	
-	<!-- 테스트용 상품입력. 추후 삭제 -->
-	<button id="test">test장바구니추가(상품1,2,3)</button>
 
 	<script type="text/javascript">
 	$(document).ready(function() {
-		// 테스트용 상품입력. 추후 삭제
-		$("#test").click(function() {
-			cartInsert(1234,1,5000);
-			cartInsert(1235,1,6000);
-		});
-		
 		getCartList();	// 장바구니 목록
 		getTotalPrice();	// 장바구니 총 가격
-				
+		
+		// 장바구니 모두 삭제
+		$("#allDelete").click(function() {
+			cartAllDelete();
+			
+		});
+		
 		// 장바구니 상품 삭제
 		$(".cartList").on("click",".cartDelete", function() {
 			var that= $(this);
@@ -73,7 +74,19 @@
 		$(".cartList").on("click",".minus", function() {
 			var that= $(this);
 			cartAmountMinusOne(that);
+			// 장바구니 상품 개수 줄일 때 
+			var cartNo = that.attr("data-cartNo");
+			$.getJSON("/cart/getAmount/" + cartNo, function(amount) {
+				if (amount <= 1) {
+					alert("1개 이하로 줄일 수 없습니다.");
+					that.parent().hide();
+					return;
+				}else{
+					
+				}
+			});
 		});
+		
 		
 	});
 

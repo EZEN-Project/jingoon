@@ -37,26 +37,15 @@
 	<select id="getCartCount" resultType="Integer">
 		select count(cartNo) from cart where memberNo = #{memberNo}
 	</select>
-	
-	<!-- 장바구니 상품 수량 조회 -->
-	<select id="getAmount" resultType="Integer">
-		select amount from cart where cartNo = #{cartNo}
+	<!-- 장바구니 상품 조회 -->
+	<select id="getCart" resultType="kr.co.domain.CartVO">
+		select * from cart where cartNo = #{cartNo}
 	</select>
 	
 	<!-- 장바구니 상품 일치조회 -->
 	<select id="cartSearch" resultType="Integer">
 		select cartNo from cart where memberNo = #{memberNo} and sellboardNo = #{sellboardNo}
 	</select>
-	
-	<!-- 결제가격 조회 -->
-	<select id="getaPrice" resultType="Integer">
-		select aPrice from cart where cartNo = #{cartNo}
-	</select>
-	
-	<!-- 장바구니 상품 가격 조회 -->
-	<select id="getPrice" resultType="Integer">
-		select price from cart where cartNo = #{cartNo}
-	</select>
-	
+		
 	
 </mapper>
