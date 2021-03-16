@@ -26,7 +26,7 @@
 				<a href="/member/login">로그인</a>
 			</c:when>
 			<c:otherwise>
-				<span>${login.userId} 님, 환영합니다.</span>
+				<span><a href="/member/read">${login.name}</a> 님, 환영합니다.</span>
 				<a href="/member/logout">로그아웃</a>
 			</c:otherwise>
 		</c:choose>
@@ -44,7 +44,7 @@
 	</div><!-- row -->
 	<div class="row">
 		<ol class="breadcrumb">
-		  <li><a href="">쇼핑</a></li>
+		  <li><a href="/board/list">쇼핑</a></li>
 		  <li id="cart_li" class="active"><a href="/cart/list">장바구니</a></li>
 		  <li><a href="">구매내역</a></li>
 		</ol>

@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.domain.CartVO;
+import kr.co.domain.MemberVO;
 import kr.co.domain.SellBoardVO;
 import kr.co.domain.SellVO;
 import kr.co.repository.CartDAO;
+import kr.co.repository.MemberDAO;
 import kr.co.repository.SellBoardDAO;
 import kr.co.repository.SellDAO;
 
@@ -27,6 +29,9 @@ public class CartServiceImpl implements CartService {
 	
 	@Inject
 	private SellBoardDAO sellboardDAO;
+	
+	@Inject
+	private MemberDAO memberDAO;
 	
 
 	@Override
@@ -203,13 +208,11 @@ public class CartServiceImpl implements CartService {
 		*/
 		
 		int success = 1;
-		//String id = map.get("id");
-		//MemberVO memberVO= memberDAO.getMember(id);
-		//int point = memberVO.getPoint();
-		//int memberNo = memberVO.getMnum();
-		int point = 10000000; // test 포인트
-		int memberNo = 1001; // text 회원번호
-		
+		String id = (String) map.get("id");
+		MemberVO memberVO= memberDAO.read(id);
+		int point = memberVO.getPoint();
+		int memberNo = memberVO.getMnum();
+				
 		List<CartVO> list= cartDAO.getCartList(memberNo);
 		int payPrice=0;
 		for (CartVO cartVO : list) {
@@ -252,8 +255,8 @@ public class CartServiceImpl implements CartService {
 			// 장바구니 삭제 8
 			cartDAO.delete(cartVO.getCartNo());
 		}
-		//memberVO.setPoint(point);
-		//memberDAO.update(memberVO);	//회원정보(포인트) 업데이트 9
+		memberVO.setPoint(point);
+		memberDAO.update(memberVO);	//회원정보(포인트) 업데이트 9
 		
 		
 		// 성공1 음수 실패

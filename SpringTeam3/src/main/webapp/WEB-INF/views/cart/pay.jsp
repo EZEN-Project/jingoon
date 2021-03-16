@@ -47,13 +47,10 @@ $(document).ready(function() {
 	// 결제 버튼을 누르면 결제창 보이기
 	
 	$(".cartTotalPrice").click(function() {
-				
-		/*	// 회원정보에서 point 얻기
-			var userId = ${login.id}// 로그인 구현시 적용 
-		$.getJSON("/member"+ userId, function(point) {
-			$("#point").text(point); */
-			$("#point").text(11000000);// 포인트 test용 로그인 적용 후 삭제
-			var point = $("#point").text();
+			var point = ${login.point};
+			// 회원정보에서 point 얻기
+	//	$.getJSON("/member/getPoint", function(point) {
+			$("#point").text(point); 
 			
 			// 총 가격 얻기
 			var totalPrice=$(".cartTotalPrice").children().children().children().text();

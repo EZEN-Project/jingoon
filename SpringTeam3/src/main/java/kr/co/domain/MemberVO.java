@@ -1,4 +1,3 @@
-
 package kr.co.domain;
 
 import java.io.Serializable;
@@ -7,7 +6,21 @@ import java.util.Date;
 public class MemberVO implements Serializable{
 
 	/**
-	 * 
+	 * create table member(
+mnum number(6) primary key,
+id varchar2(10) not null,
+email varchar2(20) not null,
+pw varchar2(15) not null,
+name varchar2(12) not null,
+phone number(15) not null,
+address varchar2(300) not null,
+regdate DATE DEFAULT SYSDATE,
+updatedate DATE DEFAULT SYSDATE,
+birth varchar2(14) not null,
+point number(10) DEFAULT 0,
+mtype number(10) DEFAULT 1,
+memo varchar2(100)
+)
 	 */
 	private static final long serialVersionUID = 1L;
 	
@@ -18,19 +31,19 @@ public class MemberVO implements Serializable{
 	private String name;
 	private String phone;
 	private String address;
-	private Date regdate;
-	private Date updatedate;
-	private Date birth;
-	private int	point;
-	private int	mtype;
+	private Date regDate;
+	private Date updateDate;
+	private String birth;
+	private int point;
+	private int mType;
 	private String memo;
 	
 	public MemberVO() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public MemberVO(int mnum, String id, String email, String pw, String name, String phone, String address, Date regdate,
-			Date updatedate, Date birth, int point, int mtype, String memo) {
+
+	public MemberVO(int mnum, String id, String email, String pw, String name, String phone, String address, Date regDate,
+			Date updateDate, String birth, int point, int mType, String memo) {
 		super();
 		this.mnum = mnum;
 		this.id = id;
@@ -39,126 +52,142 @@ public class MemberVO implements Serializable{
 		this.name = name;
 		this.phone = phone;
 		this.address = address;
-		this.regdate = regdate;
-		this.updatedate = updatedate;
+		this.regDate = regDate;
+		this.updateDate = updateDate;
 		this.birth = birth;
 		this.point = point;
-		this.mtype = mtype;
+		this.mType = mType;
 		this.memo = memo;
 	}
+
+	public MemberVO(String id, String email, String pw, String name, String phone, String address, String birth) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.pw = pw;
+		this.name = name;
+		this.phone = phone;
+		this.address = address;
+		this.birth = birth;
+	}
+
 	public int getMnum() {
 		return mnum;
 	}
+
 	public void setMnum(int mnum) {
 		this.mnum = mnum;
 	}
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPw() {
 		return pw;
 	}
+
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getPhone() {
 		return phone;
 	}
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
 	public String getAddress() {
 		return address;
 	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public Date getRegdate() {
-		return regdate;
+
+	public Date getRegDate() {
+		return regDate;
 	}
-	public void setRegdate(Date regdate) {
-		this.regdate = regdate;
+
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
 	}
-	public Date getUpdatedate() {
-		return updatedate;
+
+	public Date getUpdateDate() {
+		return updateDate;
 	}
-	public void setUpdatedate(Date updatedate) {
-		this.updatedate = updatedate;
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
-	public Date getBirth() {
+
+	public String getBirth() {
 		return birth;
 	}
-	public void setBirth(Date birth) {
+
+	public void setBirth(String birth) {
 		this.birth = birth;
 	}
+
 	public int getPoint() {
 		return point;
 	}
+
 	public void setPoint(int point) {
 		this.point = point;
 	}
-	public int getMtype() {
-		return mtype;
+
+	public int getmType() {
+		return mType;
 	}
-	public void setMtype(int mtype) {
-		this.mtype = mtype;
+
+	public void setmType(int mType) {
+		this.mType = mType;
 	}
+
 	public String getMemo() {
 		return memo;
 	}
+
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		MemberVO other = (MemberVO) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-
-	@Override
 	public String toString() {
-		return "MemberVO [id=" + id + ", email=" + email + ", name=" + name + "]";
+		return "MemberVO [mnum=" + mnum + ", id=" + id + ", email=" + email + ", pw=" + pw + ", name=" + name
+				+ ", phone=" + phone + ", address=" + address + ", regDate=" + regDate + ", updateDate=" + updateDate
+				+ ", birth=" + birth + ", point=" + point + ", mType=" + mType + ", memo=" + memo + "]";
 	}
+
+	
 	
 	
 
-	
 }

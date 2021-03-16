@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.domain.CartVO;
+import kr.co.domain.LoginDTO;
+import kr.co.domain.MemberVO;
 import kr.co.service.CartService;
+import kr.co.service.MemberService;
 
 @RestController
 @RequestMapping("/cart")
@@ -22,20 +25,20 @@ public class CartRestController {
 	@Inject
 	private CartService cartService;
 	
+	@Inject MemberService memberService;
+	
 	// 결제하기 성공1, 
 	// 0 비밀번호 오류
 	// -1 포인트 부족
 	// -2 판매수량 부족
-	//
 	@RequestMapping(value = "/pay",method = RequestMethod.POST)
 	public int pay(@RequestBody Map<String, Object> map, HttpSession session) {
 		String pw =(String) map.get("pw");
-		//LoginDTO login session.getAttribute("login");
-//		if(!pw.equals(login.getPw)) {
-//			return 0;
-//		}
-		//map.put("id", login.getId());
-		System.out.println("입력 pw확인: "+pw);// 입력 pw확인
+		MemberVO memberVO =(MemberVO) session.getAttribute("login");
+		if(!pw.equals(memberVO.getPw())) {
+			return 0;
+		}
+		map.put("id", memberVO.getId());
 		int success = cartService.cartPay(map);
 		
 		return success;
@@ -53,13 +56,12 @@ public class CartRestController {
 	// 장바구니에 상품 추가
 	@RequestMapping(value = "", method = RequestMethod.POST,
 			produces = "application/text; charset=utf-8")
-	public String insert(@RequestBody Map<String, Object> map) {
-	/*	로그인 권한 적용후 주석 해제	
-		Object login= session.getAttribute("login");
-		String id = login.getId;
-		int memberNo = memberService.getMnum((String)map.get("id"));
-	*/
-		int memberNo = 1001;	// test값
+	public String insert(@RequestBody Map<String, Object> map, HttpSession session) {
+	
+		MemberVO vo= (MemberVO) session.getAttribute("login");
+		MemberVO memberVO= memberService.read(vo);
+		
+		int memberNo = memberVO.getMnum();	
 		map.put("memberNo", memberNo);
 		String getSellboardNo= map.get("sellboardNo").toString();
 		int sellboardNo = Integer.valueOf(getSellboardNo);
@@ -98,28 +100,28 @@ public class CartRestController {
 	}
 	// 장바구니 상품 삭제
 	@RequestMapping(value = "/allDelete", method = RequestMethod.GET)
-	public int allDelete() {
-		//int memberNo = memberService.getMnum(id);
-		int memberNo = 1001;
+	public int allDelete(HttpSession session) {
+		MemberVO vo =(MemberVO) session.getAttribute("login");
+		int memberNo = vo.getMnum();
 		int success = cartService.allDelete(memberNo);
 		return success;
 	}
 	
 	// 상품의 구매종류
 	@RequestMapping(value = "/getCartCount", method = RequestMethod.GET)
-	public int getCartCount() {
-		//int memberNo = memberService.getMnum(id);
-		int memberNo = 1001;
+	public int getCartCount(HttpSession session) {
+		MemberVO vo =(MemberVO) session.getAttribute("login");
+		int memberNo = vo.getMnum();
 
 		return cartService.getCartCount(memberNo);
 	}
 	
 	// 장바구니 상품의 총 가격(가격 * 개수)
 	@RequestMapping(value = "/getTotalPrice", method = RequestMethod.GET)
-	public int getTotalPrice() {
+	public int getTotalPrice(HttpSession session) {
 		
-		//int memberNo = memberService.getMnum(id);
-		int memberNo = 1001;
+		MemberVO vo =(MemberVO) session.getAttribute("login");
+		int memberNo = vo.getMnum();
 		
 		return cartService.getTotalPrice(memberNo);
 	}
@@ -127,10 +129,10 @@ public class CartRestController {
 	
 	// 장바구니 리스트( + 상품정보)
 	@RequestMapping(value = "/getCartList", method = RequestMethod.GET)
-	public Map<Object, Object> getCart() {
+	public Map<Object, Object> getCart(HttpSession session) {
 				
-		//int memberNo = memberService.getMnum(id);
-		int memberNo = 1001;
+		MemberVO vo =(MemberVO) session.getAttribute("login");
+		int memberNo = vo.getMnum();
 		
 		return cartService.getCartList(memberNo);
 		
