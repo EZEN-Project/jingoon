@@ -28,7 +28,6 @@ public class MemberViewController {
 	//회원가입
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public String insert(MemberVO memberVO) {
-		System.out.println(memberVO);// test
 		int success = memberService.insert(memberVO);
 		if(success==1) {
 			return "/member/login";
@@ -41,7 +40,7 @@ public class MemberViewController {
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public void read(Model model,HttpSession session) {
 		MemberVO vo= (MemberVO) session.getAttribute("login");
-		MemberVO memberVO = memberService.read(vo);
+		MemberVO memberVO = memberService.read(vo.getId());
 		model.addAttribute("memberVO", memberVO);
 	}
 	
@@ -49,7 +48,7 @@ public class MemberViewController {
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public void update(Model model,HttpSession session) {
 		MemberVO vo= (MemberVO) session.getAttribute("login");
-		MemberVO memberVO = memberService.read(vo);
+		MemberVO memberVO = memberService.read(vo.getId());
 		model.addAttribute("memberVO", memberVO);
 	}
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -58,10 +57,12 @@ public class MemberViewController {
 		return "redirect:/member/read";
 	}
 	
-	// 회원 탈퇴
+	// 회원 탈퇴 mnum, mType, memo 
 	@RequestMapping(value = "/updateD", method = RequestMethod.POST)
 	public String updateD(MemberVO vo) {
-		memberService.updateD(vo);
+		vo.setMemo("회원탈퇴");
+		vo.setmType(2);
+		memberService.updateMType(vo);
 		return "redirect:/member/logout";
 	}
 	

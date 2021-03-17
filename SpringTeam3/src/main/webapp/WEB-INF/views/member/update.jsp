@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원정보</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -172,12 +172,15 @@
 		$(document).ready(function(){
 			$("#member_update_btn_delete").click(function(e) {
 				e.preventDefault();
+				var password= prompt("탈퇴확인: 비밀번호를 입력하세요");
+				$("#form").attr("action", "/member/updateD");
+				$("#pw").val(password);
+				
 				var deleteConfig = $("#pw").val();
-				var inputConfig= prompt("탈퇴확인: 비밀번호를 입력하세요");
-				if(inputConfig == deleteConfig){
-					$("#form").attr("action", "/member/updateD");
-					$("#form").submit();
-				}
+				alert("비민번호: "+deleteConfig)// 비밀번호 확인후 삭제
+				
+				$("#form").submit();
+				
 				
 			});
 			

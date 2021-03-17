@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.smypage">
+	<sql id="search1">
+		<if test="searchType == 'buynum'.toString() ">
+			WHERE LOWER(buynum) LIKE '%'||LOWER(#{keyword})||'%'
+		</if>							
+	</sql>
+	<sql id="search2">
+		<if test="searchType == 'selldate'.toString() ">
+			WHERE to_char(selldate,'yyyy-mm-dd') LIKE '%'||LOWER(#{keyword})||'%'
+		</if>
+	</sql>
+	<sql id="search3">
+		<if test="searchType == 'sellnum'.toString() ">
+			WHERE LOWER(sellnum) LIKE '%'||LOWER(#{keyword})||'%'
+		</if>
+	</sql>
+
+
+	<select id="getAmount" resultType="Integer">
+		SELECT COUNT(sellnum) FROM sell 
+		<include refid="search1"></include> 
+		<include refid="search2"></include>
+		<include refid="search3"></include>  
+	</select>
+	
+	<select id="adminlist" resultType="kr.co.domain.SellVO">
+		SELECT * FROM sell 
+		<include refid="search1"></include>
+		<include refid="search2"></include> 
+		<include refid="search3"></include>  
+		ORDER BY sellnum DESC
+	</select>
+</mapper>

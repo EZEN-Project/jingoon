@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mypage">
+	<select id="updateUI" resultType="kr.co.domain.MemberVO">
+		select * from member where mnum = #{mnum}
+	</select>
+	<update id="update">
+		UPDATE member SET 
+		pw = #{pw}, name = #{name}, email = #{email},address = #{address},
+		updatedate = SYSDATE WHERE mnum = #{mnum} 
+	</update>
+	<select id="list" resultType="kr.co.domain.SellVO">
+		select * from sell where buynum = #{buynum}
+	</select>
+	<update id="delete">
+		UPDATE sell SET 
+		groupnum = -1 where	sellnum = #{sellnum}
+	</update>
+	<select id="adminlist" resultType="kr.co.domain.SellVO">
+		SELECT * FROM sell ORDER BY selldate DESC
+	</select>
+	
+	<select id="getAmount" resultType="Integer">
+		SELECT COUNT(sellnum) FROM sell
+	</select>
+	
+	<select id="chart_day" resultType="kr.co.domain.TotalVO">
+		select selldate, sum(aprice) as aprice
+        from ((SELECT to_char(selldate, 'yyyy-mm-dd') selldate,aprice FROM sell))
+        GROUP BY selldate order by selldate asc
+	</select>
+	<select id="chart_month" resultType="kr.co.domain.TotalVO">
+		select selldate, sum(aprice) as aprice
+        from ((SELECT to_char(selldate, 'yyyy-mm') selldate,aprice FROM sell))
+        GROUP BY selldate order by selldate asc
+	</select>
+	<select id="chart_year" resultType="kr.co.domain.TotalVO">
+		select selldate, sum(aprice) as aprice
+        from ((SELECT to_char(selldate, 'yyyy') selldate,aprice FROM sell))
+        GROUP BY selldate order by selldate asc
+	</select>
+
+
+</mapper>

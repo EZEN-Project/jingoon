@@ -29,7 +29,7 @@ memo varchar2(100)
 	private String email;
 	private String pw;
 	private String name;
-	private String phone;
+	private String phone;	
 	private String address;
 	private Date regDate;
 	private Date updateDate;
@@ -44,6 +44,7 @@ memo varchar2(100)
 
 	public MemberVO(int mnum, String id, String email, String pw, String name, String phone, String address, Date regDate,
 			Date updateDate, String birth, int point, int mType, String memo) {
+
 		super();
 		this.mnum = mnum;
 		this.id = id;
@@ -116,6 +117,9 @@ memo varchar2(100)
 	}
 
 	public void setPhone(String phone) {
+
+	
+
 		this.phone = phone;
 	}
 

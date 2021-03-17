@@ -34,7 +34,7 @@
 							비밀번호 확인<form action="/cart/pay" method="post"><input class="form-control" id="pw" type="password"></form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">결제 취소</button>
+							<button type="button" class="btn btn-default" id="payModal_btn_payCS" data-dismiss="modal">결제 취소</button>
 							<button id="payModal_btn_pay" type="button" class="btn btn-primary" data-dismiss="modal">결제 하기</button>
 						</div>
 					</div>
@@ -44,20 +44,23 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	// 결제 버튼을 누르면 결제창 보이기
 	
+	// 결제 버튼을 누르면 결제창 보이기
 	$(".cartTotalPrice").click(function() {
-			var point = ${login.point};
-			// 회원정보에서 point 얻기
-	//	$.getJSON("/member/getPoint", function(point) {
-			$("#point").text(point); 
+		
+		// 포인트 가져오기
+		$.getJSON("/member/getPoint", function(map){
 			
+			$("#point").text(map.point);
+		
 			// 총 가격 얻기
 			var totalPrice=$(".cartTotalPrice").children().children().children().text();
 			$("#payPrice").text(totalPrice);
 			var payPrice = $("#payPrice").text();
 			
 			// 잔액계산
+			var point = map.point;
+			console.log(point);
 			var balance = Number(point) - Number(totalPrice);
 			$("#balance").text(balance);
 	
@@ -93,11 +96,9 @@ $(document).ready(function() {
 				}else{
 					alert("구매 상품 중 "+totalTitle+" 의 제품 수량이 부족합니다.");
 				}
-			});	//getJSON("/cart/getCartList"
-					
-	//	});	//getJSON("/member"+ userId
-		
-	});	//$(".cartTotalPrice")
+			});	// 장바구니목록의 수량체크
+		});	//	포인트 가져오기
+	});	// 결제버튼
 	
 	// 모달창 결제버튼 누르면
 	$("#payModal_btn_pay").click(function() {
@@ -120,9 +121,11 @@ $(document).ready(function() {
 			}),
 			dataType: "text",
 			success: function(result) {
-				if(result==1){
+				$("#pw").val("");
+				if(result>=0){
+					alert("결제 완료!")
 					location.assign("/mypage/list");
-				}else if(result==0){
+				}else if(result==-3){
 					alert("결제취소: 비밀번호가 틀렸습니다");
 					return;
 				}else if(result==-1){
@@ -132,10 +135,17 @@ $(document).ready(function() {
 					alert("결제취소: 판매수량이 부족합니다");
 					return;
 				}
+
 			}
 
 		});
 	});
+	
+	// 결제취소 비밀번호 지우기
+	$("#payModal_btn_payCS").click(function() {
+		$("#pw").val("");	
+	});
+	
 	
 	
 });

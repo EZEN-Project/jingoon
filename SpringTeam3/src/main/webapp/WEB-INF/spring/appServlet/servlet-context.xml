@@ -46,6 +46,10 @@
 		</interceptor>
 		<!-- 로그인인증 -->
 		<interceptor>
+			<mapping path="/member/read"/>
+			<mapping path="/member/update"/>
+			<mapping path="/cart/insert"/>
+			<mapping path="/cart/list"/>
 			<mapping path="/board/insert"/>
 			<mapping path="/board/update"/>
 			<mapping path="/board/delete"/>

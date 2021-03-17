@@ -11,9 +11,13 @@ public interface MemberService {
 
 	MemberVO login(LoginDTO loginDTO);
 
-	MemberVO read(MemberVO vo);
+	MemberVO read(String id);
 
 	void update(MemberVO vo);
 
-	void updateD(MemberVO vo);
+	void updateMType(MemberVO vo);
+
+	int addPoint(int point, int mnum, String memo);
+
+	int getPoint(int mnum);
 }

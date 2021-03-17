@@ -38,21 +38,36 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public MemberVO read(MemberVO vo) {
+	public MemberVO read(String id) {
 		// TODO Auto-generated method stub
-		return memberDAO.read(vo.getId());
+		return memberDAO.read(id);
 	}
 
 	@Override
 	public void update(MemberVO vo) {
-		vo.setmType(1);
 		memberDAO.update(vo);
 	}
 
 	@Override
-	public void updateD(MemberVO vo) {
-		vo.setmType(2);
+	public void updateMType(MemberVO vo) {
 		memberDAO.update(vo);
+	}
+
+	@Override
+	public int addPoint(int point, int mnum, String memo) {
+		MemberVO vo = memberDAO.readM(mnum);
+		int points = point + vo.getPoint();
+		int success= memberDAO.updatePoint(points, memo, mnum);
+		if(success ==1) {
+			return points;
+		}
+		return success;
+	}
+
+	@Override
+	public int getPoint(int mnum) {
+		MemberVO vo = memberDAO.readM(mnum);
+		return vo.getPoint();
 	}
 
 }

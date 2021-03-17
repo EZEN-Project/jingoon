@@ -55,6 +55,9 @@
 		// 장바구니 모두 삭제
 		$("#allDelete").click(function() {
 			cartAllDelete();
+			setTimeout(function() {
+				getCartCount();
+			}, 1000);
 			
 		});
 		
@@ -62,6 +65,9 @@
 		$(".cartList").on("click",".cartDelete", function() {
 			var that= $(this);
 			cartDelete(that);
+			setTimeout(function() {
+				getCartCount();
+			}, 1000);
 		});
 		
 		// 장바구니 상품 개수 증가(+버튼)
