@@ -17,7 +17,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
-<script src="/resources/js/cart.js?vs=0.36" type="text/javascript"></script>
+<script src="/resources/js/cart.js?vs=0.37" type="text/javascript"></script>
 
 </head>
 <body>

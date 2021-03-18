@@ -73,7 +73,7 @@ function getCartList() {
 			str += `
 			<div class="media">
 				<div class="media-left media-middle">
-					<a href="#"> <img class="media-object img-thumbnail" height="164" width="164" src="/resources/upload/${sellboard.name}" alt="/resources/upload/esc.png">
+					<a href="/sellboard/read/${sellboard.bnum}"> <img class="media-object img-thumbnail" height="164" width="164" src="/resources/upload${sellboard.name}" alt="해당이미지를 불러올수 없습니다.">
 					</a>
 				</div>
 				<div  class="media-body">
@@ -91,7 +91,7 @@ function getCartList() {
 							  <span data-cartNo="${cart.cartNo}" data-price="${cart.price}" class="glyphicon glyphicon-plus plus" aria-hidden="true"></span>
 						</button>
 						<span>(최대 ${sellboard.bcount}개)</span> 
-						<button data-sellboardNo="${cart.sellboardNo}" data-title="${sellboard.title}" data-amount="${cart.amount}" data-cartNo="${cart.cartNo}" class="btn btn-default-md cartDelete">삭제</button>
+						<button data-sellboardNo="${cart.sellboardNo}" data-title="${sellboard.title}" data-amount="${cart.amount}" data-cartNo="${cart.cartNo}" class="btn btn-danger btn-md cartDelete">삭제</button>
 					</div>
 					<div class="list-group-item">구매 가격: 
 						<span>${cart.aPrice}</span>원

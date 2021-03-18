@@ -59,7 +59,7 @@ regdate date default sysdate,
 constraint fk_attach_bnum foreign key(bnum) references sellboard(bnum)
 on delete cascade
 )
-
+select * from attach
 -- 회원 정보 
 create table member(
 mnum number(6) primary key,

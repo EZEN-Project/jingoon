@@ -177,8 +177,10 @@
 				$("#pw").val(password);
 				
 				var deleteConfig = $("#pw").val();
-				alert("비민번호: "+deleteConfig)// 비밀번호 확인후 삭제
-				
+				if(deleteConfig == ""){
+					alert("탈퇴 취소");
+					return;
+				}
 				$("#form").submit();
 				
 				

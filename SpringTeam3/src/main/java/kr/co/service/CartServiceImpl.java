@@ -55,7 +55,12 @@ public class CartServiceImpl implements CartService {
 			SellBoardVO sellboarVO= sellboardDAO.read(sellboardNo);	// 판매게시물 번호로 판매게시물 정보 가져오기
 			// 이미지 가져오기
 			List<String> imgArr= sellboardDAO.getAttaches(sellboardNo);
-			String img = imgArr.get(0);
+			String img = "";
+			if(imgArr.size()==0) {
+				img = "";
+			}else {
+				img=imgArr.get(0);
+			}
 			sellboarVO.setName(img);
 			map.put(sellboardNo, sellboarVO);
 		}
@@ -249,7 +254,7 @@ public class CartServiceImpl implements CartService {
 			
 			// 판매정보 저장 7
 			SellVO sellVO = new SellVO(cartVO.getMemberNo(), sellboardNo, amount, cartVO.getaPrice(), img);
-			sellVO.setGroupNum(groupNum+1);
+			sellVO.setGroupNum(groupNum<1? 1 : groupNum+1);
 			sellDAO.insert(sellVO);
 			
 			// 장바구니 삭제 8

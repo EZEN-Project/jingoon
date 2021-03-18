@@ -31,7 +31,7 @@
 							결제 비용	: <span id="payPrice"></span> 원<br>
 							    잔액 : <span id="balance"></span> 원<br>
 							<h1>결제하시겠습니까?</h1>
-							비밀번호 확인<form action="/cart/pay" method="post"><input class="form-control" id="pw" type="password"></form>
+							비밀번호 확인<input class="form-control" id="pw" type="password">
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" id="payModal_btn_payCS" data-dismiss="modal">결제 취소</button>
@@ -45,7 +45,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	
-	// 결제 버튼을 누르면 결제창 보이기
+	// 총가격 버튼을 누르면 결제창 보이기
 	$(".cartTotalPrice").click(function() {
 		
 		// 포인트 가져오기
@@ -98,14 +98,20 @@ $(document).ready(function() {
 				}
 			});	// 장바구니목록의 수량체크
 		});	//	포인트 가져오기
-	});	// 결제버튼
+		
+		// 모달창 엔터 막기
+/* 		$("#pw").keydown(function(key) { //키다운을 했을 때
+	  	  if (key.keyCode == 13) { //엔터이면
+	  		  return;
+	  	  }
+	    }); */
+	});	// 총가격
 	
-	// 모달창 결제버튼 누르면
+	// 모달창 결제 함수
 	$("#payModal_btn_pay").click(function() {
-		// 비밀번호 입력 확인
 		var pw = $("#pw").val();
 		if(pw == ""){
-			alert("비밀번호를 입력해주세요.");
+			alert("비밀번호를 입력하세요")
 			return;
 		}
 		// 결제 진행. 비밀번호가 틀리면 실패!
@@ -135,12 +141,12 @@ $(document).ready(function() {
 					alert("결제취소: 판매수량이 부족합니다");
 					return;
 				}
-
+				
 			}
 
-		});
+		});	
 	});
-	
+		
 	// 결제취소 비밀번호 지우기
 	$("#payModal_btn_payCS").click(function() {
 		$("#pw").val("");	
