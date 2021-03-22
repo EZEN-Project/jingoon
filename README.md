@@ -1,6 +1,7 @@
 # jingoon
 진군 저장소
 
+210322
 
 - 회원가입 임계테스트, 회원수정 임계테스트, 포인트 충전 임계테스트, 장바구니 입력수정 , 테스트 기록 및 정리
 - carousel의 중복 제거
@@ -10,6 +11,10 @@
 
 CartVO oriCartVO=cartDAO.getCart(cartNo);
 amount = amount + oriCartVO.getAmount();
+
+
+![image](https://user-images.githubusercontent.com/72857217/111974760-22ed9f80-8b43-11eb-9657-577dbb75c56c.png)
+
 
 
 ---
