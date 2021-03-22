@@ -58,11 +58,7 @@ public class CartRestController {
 	public String insert(@RequestBody Map<String, Object> map, HttpSession session) {
 	
 		MemberVO memberVO= (MemberVO) session.getAttribute("login");
-		if(memberVO == null) {
-			System.out.println(memberVO);
-			return "로그인을 해야합니다";
-		}
-		
+				
 		int memberNo = memberVO.getMnum();	
 		map.put("memberNo", memberNo);
 		String getSellboardNo= map.get("sellboardNo").toString();

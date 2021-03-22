@@ -37,7 +37,13 @@
  
 </head>
 <body>
+    <div class="container-fluid">
+        <jsp:include page="/WEB-INF/views/header/loginHeader.jsp"></jsp:include>
+       	
+    </div>
 <div class="container">
+
+    <hr>
 	<div class="row">
 		<h1 class="jumbotron">상품 게시글 수정</h1>
 	</div>
@@ -148,7 +154,46 @@
 		 $("#update_btn_back").click(function() {
 	            history.back();
 	         });
+		 
+         $(".uploadedList").on("click", ".delbtn", function() {
+             var isOk = confirm("[수정]버튼이나 [되돌아가기]버튼과 상관없이 첨부파일이 삭제됩니다.");
+             
+             if(isOk){
+                var that = $(this);
+                
+                $.ajax({
+                   type : 'post',
+                   url : '/sellboard/deleteFile',
+                   data : {
+                      fileName : that.attr("data-src")
+                   },
+                   dataType : 'text', 
+                   success : function(result) {
+                      if(result == 'o'){
+                         that.parent().parent().parent().remove();
+                         
+                         $.ajax({
+                            type : 'post',
+                            url : '/board/deleteFile',
+                            data : {
+                               fileName : that.attr("data-src")
+                            },
+                            dataType : 'text',
+                            success : function(result) {
+                               alert(result);
+                            }
+                         });         
+                         
+                      }else{
+                         alert("삭제 실패했습니다.");
+                      }
+                   }          
+                });
+             }
+             
+          });
 		
+         
 	});
 	
 	

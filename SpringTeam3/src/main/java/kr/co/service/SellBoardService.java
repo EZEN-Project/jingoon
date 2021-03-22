@@ -18,4 +18,11 @@ public interface SellBoardService {
 
 	public void delete(int bnum);
 
+	public List<SellBoardVO> list();
+
+	public void deleteFile(String fileName);
+
+
+
+
 }

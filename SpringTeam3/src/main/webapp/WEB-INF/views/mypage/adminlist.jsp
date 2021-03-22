@@ -27,7 +27,7 @@
 <body>
 <!-- 로그인&로그아웃 -->
     <div class="container-fluid">
-        <jsp:include page="/WEB-INF/views/header/adminlistLoginHeader.jsp"></jsp:include>
+        <jsp:include page="/WEB-INF/views/header/loginHeader.jsp"></jsp:include>
        	
     </div>
     <hr>
@@ -72,7 +72,7 @@
 			<nav aria-label="Page navigation">
   				<ul class="pagination">
     				<li>
-      					<a href="/mypage/adminlist/${to.curPage <= 1? 1 : to.curPage-1}" aria-label="Previous">
+      					<a href="/mypage/adminlist/${to.curPage < to.perPage+1? 1:to.curPage-to.perPage}" aria-label="Previous">
         					<span aria-hidden="true">&laquo;</span>
       					</a>
     				</li><!-- "<<" -->
@@ -83,7 +83,7 @@
     					
     				</c:forEach>
     				<li>
-				      <a href="/mypage/adminlist/${to.curPage < to.totalPage ? to.curPage+1 : to.totalPage }" aria-label="Next">
+				      <a href="/mypage/adminlist/${to.curPage < to.totalPage-to.perPage? to.curPage+to.perPage : to.totalPage }" aria-label="Next">
 				        <span aria-hidden="true">&raquo;</span>
 				      </a>
 				    </li><!-- ">>" -->

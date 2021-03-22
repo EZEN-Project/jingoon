@@ -64,4 +64,29 @@ public class SellBoardDAOImpl implements SellBoardDAO{
 		
 	}
 
+	@Override
+	public List<SellBoardVO> list() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NS+".list");
+	}
+
+	@Override
+	public void deleteFile(String fileName) {
+		sqlSession.delete(NS+".deleteFile", fileName);
+		
+	}
+
+	@Override
+	public void deleteFilesByBnum(int bnum) {
+		sqlSession.delete(NS+".deleteFilesByBnum", bnum);
+		
+	}
+
+
+
+
+
+
+
+
 }

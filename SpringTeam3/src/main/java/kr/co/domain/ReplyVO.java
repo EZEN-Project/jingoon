@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ReplyVO {
    private int rno;
-   private int bno;
+   private int bnum;
    private String replyText;
    private String replyer;
    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd")
@@ -19,79 +19,79 @@ public class ReplyVO {
       // TODO Auto-generated constructor stub
    }
 
-   public ReplyVO(int bno, String replyText, String replyer) {
-      super();
-      this.bno = bno;
-      this.replyText = replyText;
-      this.replyer = replyer;
-   }
-   
-   
-
-   public ReplyVO(int rno, int bno, String replyText, String replyer, Date regDate, Date updateDate) {
+public ReplyVO(int rno, int bnum, String replyText, String replyer, Date regDate, Date updateDate) {
 	super();
 	this.rno = rno;
-	this.bno = bno;
+	this.bnum = bnum;
 	this.replyText = replyText;
 	this.replyer = replyer;
 	this.regDate = regDate;
 	this.updateDate = updateDate;
-   }
+}
 
-   public int getRno() {
-      return rno;
-   }
 
-   public void setRno(int rno) {
-      this.rno = rno;
-   }
+public ReplyVO(int bnum, String replyText, String replyer) {
+	super();
+	this.bnum = bnum;
+	this.replyText = replyText;
+	this.replyer = replyer;
+}
 
-   public int getBno() {
-      return bno;
-   }
+public int getRno() {
+	return rno;
+}
 
-   public void setBno(int bno) {
-      this.bno = bno;
-   }
+public void setRno(int rno) {
+	this.rno = rno;
+}
 
-   public String getReplyText() {
-      return replyText;
-   }
+public int getBnum() {
+	return bnum;
+}
 
-   public void setReplyText(String replyText) {
-      this.replyText = replyText;
-   }
+public void setBnum(int bnum) {
+	this.bnum = bnum;
+}
 
-   public String getReplyer() {
-      return replyer;
-   }
+public String getReplyText() {
+	return replyText;
+}
 
-   public void setReplyer(String replyer) {
-      this.replyer = replyer;
-   }
+public void setReplyText(String replyText) {
+	this.replyText = replyText;
+}
 
-   public Date getRegDate() {
-      return regDate;
-   }
+public String getReplyer() {
+	return replyer;
+}
 
-   public void setRegDate(Date regDate) {
-      this.regDate = regDate;
-   }
+public void setReplyer(String replyer) {
+	this.replyer = replyer;
+}
 
-   public Date getUpdateDate() {
-      return updateDate;
-   }
+public Date getRegDate() {
+	return regDate;
+}
 
-   public void setUpdateDate(Date updateDate) {
-      this.updateDate = updateDate;
-   }
+public void setRegDate(Date regDate) {
+	this.regDate = regDate;
+}
+
+public Date getUpdateDate() {
+	return updateDate;
+}
+
+public void setUpdateDate(Date updateDate) {
+	this.updateDate = updateDate;
+}
 
 @Override
 public String toString() {
-	return "ReplyVO [rno=" + rno + ", bno=" + bno + ", replyText=" + replyText + ", replyer=" + replyer
-			+ ", updateDate=" + updateDate + "]";
+	return "ReplyVO [rno=" + rno + ", bnum=" + bnum + ", replyText=" + replyText + ", replyer=" + replyer + ", regDate="
+			+ regDate + ", updateDate=" + updateDate + "]";
 }
    
-   
+
+ 
 
 }

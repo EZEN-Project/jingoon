@@ -38,13 +38,23 @@
 				<button	class="btn btn-md btn-primary btn-block">회원가입</button>
 			</a>
 		</div>
+		<div class="row">
+		
+				<a href="/member/findpw"><button	class="btn btn-md btn-primary btn-block" id="findpw">비밀번호찾기</button></a>
+			
+		</div>
+			<div class="row">
+		
+				<a href="/member/findid"><button	class="btn btn-md btn-primary btn-block" id="findid">아이디찾기</button></a>
+			
+		</div>
 	</div>
 
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-
-		})
+			
+		});
 	</script>
 
 </body>

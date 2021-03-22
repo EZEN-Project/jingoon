@@ -19,6 +19,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		 if(login != null) {
 			 session.removeAttribute("login"); //로그아웃방법1
 		 }
+		 
 		return true;	
 	}
 
@@ -31,8 +32,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		if(login != null) {
 			session.setAttribute("login", login);
 			
-			String dest = (String) session.getAttribute("dest");
-			response.sendRedirect(dest != null ? dest : "/");
+			String referer = (String) session.getAttribute("referer");// 이전페이지
+			response.sendRedirect(referer !=null ? (referer.equals("http://localhost:8089/member/login") ? "/": referer ) : "/");
 			
 		}else {
 			response.sendRedirect("/member/login");

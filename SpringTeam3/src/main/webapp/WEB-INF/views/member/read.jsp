@@ -107,7 +107,7 @@
 			
 		$("#member_read_btn_update").click(function(){
 			var deleteConfig = $("#pw").val();
-			var inputConfig= prompt("비밀번호를 입력하세요");
+			var inputConfig = prompt("비밀번호를 입력하세요");
 			if(inputConfig == deleteConfig){
 				console.log(inputConfig);
 				console.log(deleteConfig);

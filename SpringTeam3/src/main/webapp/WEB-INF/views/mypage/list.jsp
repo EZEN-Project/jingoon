@@ -35,13 +35,17 @@
 		<h1 class="jumbotron">결제 내역</h1>
 	</div>	
 	<hr>
-	<div id="row">
-		<div id="form-group">
+	<div align="right">
+	<button class="btn btn-danger btn-lg" id="btn_allDelete">모두삭제</button>
+	</div>
+	<br>
+	<div class="row">
+		
 			<div id="list" >
 		
 		
 			</div>
-		</div>
+		
 	</div>	
 </div><!-- container -->
 
@@ -66,7 +70,7 @@
 	                  dataType : "text",
 	                  success : function(result) {
 	                	  if (result =="o") {
-	                		  backEle.parent().remove();
+	                		  backEle.parent().parent().parent().remove();
 	                		 
 						}
 	                	  
@@ -75,45 +79,70 @@
 						});
 	            }
 		});
-		list();
-		function list() {
-			$.getJSON("/mypage", function(data){
+
+	$("body").on("click", "#btn_allDelete", function() {
+
+		var yesOrNo = confirm("정말로 삭제하겠습니까?");
+		if (yesOrNo) {
+			$.getJSON("/mypage/allDelete", function(data) {
 				
-				console.log(data);
-				var str="";	
-				var arr = data;
-				
-				for(var i=0; i<arr.length; i++){
-					var list = arr[i];
-					var sellnum = list.sellNum;
-					var sellboardno = list.sellboardNo;
-					var buynum = list.buyNum;
-					var amount = list.amount;
-					var aprice = list.aPrice;
-					var groupnum = list.groupNum;
-					var img = list.img;
-					if (0 < groupnum) {
-					
-						str +='<div>'+
-							  /* '<a href=""><img src="'+img+'" alt=""></a>'+ */
-							  '<span>상품 번호:'+sellnum+'</span>'+							
-							  '<span>상품 게시판 번호:'+sellboardno+'</span>'+							
-							  '<span>구매자 번호:'+buynum+'</span>'+
-							  '<span>구매 개수:'+amount+'개</span>'+
-							  '<span>구매 총가격:'+aprice+'원</span>'+													
-						      '<button data-listNo="'+sellnum+'" class="btn btn-danger btn-xs btn-delete">삭제</button>'+
-						      '</div>'
-						      '<br>';
-					};
-				};
-				
-				$("#list").html(str);
+				$(".media").remove();
 				
 			});
-			
 		}
-		
+		});
+	list();
+	function list() {
+		$.getJSON("/mypage",function(data) {
+			var str = "";
+			var arr = data;
+			for (var i = 0; i < arr.length; i++) {
+			var list = arr[i];
+			var sellnum = list.sellNum;
+			var sellboardno = list.sellboardNo;
+			var buynum = list.buyNum;
+			var amount = list.amount;
+			var aprice = list.aPrice;
+			var groupnum = list.groupNum;
+			var img = list.img;
+			if (0 < groupnum) {
+
+		str += '<div class="media">'
+				+ '<div class="media-left media-middle">'
+				+ '<a href="/sellboard/read/'+sellboardno+'"><img class="media-object img-thumbnail" height="164" width="164" src="/resources/upload'+img+'" alt="해당 이미지를 불러올수없습니다.">'
+				+ '</a>'
+				+ '</div>'
+				+ '<div class="media-body">'
+				+ '<h4 class="media-heading list-group-item">판매 번호:'
+				+ sellnum
+				+ '</h4>'
+				+ '<div class="list-group-item">구매 개수:'
+				+ '<span>'
+				+ amount
+				+ '개</span>'
+				+ '</div>'
+				+ '<div class="list-group-item">구매 가격:'
+				+ '<span>'
+				+ aprice
+				+ '원</span>'
+				+ '</div>'
+				+ '<div class="list-group-item">'
+				+ '<button data-listNo="'+sellnum+'" class="btn btn-danger btn-xs btn-delete">삭제</button>'
+				+ '</div>'
+				+ '</div>'
+				+ '</div>';
+			}
+			;
+		}
+		;
+
+		$("#list").html(str);
+
 	});
+
+	}
+
+});
 </script>
 </body>
 </html>

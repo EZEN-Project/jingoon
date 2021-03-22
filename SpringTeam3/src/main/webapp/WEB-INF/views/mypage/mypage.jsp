@@ -43,28 +43,27 @@
 	<hr>
 	<div id="btn" class="row">
 		<button id="update" type="button" class="btn btn-primary btn-lg">회원정보 수정</button>
-		<button id="list" type="button" class="btn btn-info btn-lg">결제내역</button>
-		<button id="adminlist" type="button" class="btn btn-danger btn-lg">관리자</button>
+		<button id="list" type="button" class="btn btn-info btn-lg">결제내역</button>	
 	</div>
+		
+	
+	
 	<hr>
 	
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-	//임시번호
-	var mnum = 1;
+	
+	
 	$("#update").click(function(event) {
 		
-		window.open("/mypage/update/"+mnum);
+		window.open("/member/read");
 	});
 	$("#list").click(function(event) {
 		
 		window.open("/mypage/list");
 	});
-	$("#adminlist").click(function(event) {
-		
-		window.open("/mypage/adminlist");
-	});
+
 });
 
 </script>

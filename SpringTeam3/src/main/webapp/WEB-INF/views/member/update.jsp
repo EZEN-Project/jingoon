@@ -44,7 +44,7 @@
 					    </div><!-- /input-group -->
 					  </div><!-- /.col-lg-6 -->
 				  </div><!-- /.form-group -->
-				  
+				  <input id="pw_update" value="비밀번호 변경" type="button" class="btn btn-primary" style="margin-bottom: 10px;">
 				  <div class="form-group">
 					<div class=".col-xs-12 .col-md-8">
 						<div class="input-group">
@@ -66,8 +66,8 @@
 				<div class="form-group">
 					<div class=".col-xs-12 .col-md-8">
 						<div class="input-group">
-						  <span class="input-group-addon" id="phone">전화번호</span>
-						  <input name="phone" type="tel" maxlength="11" class="form-control" value="${memberVO.phone }" required placeholder="전화번호를 -를 제외하고 입력하세요" aria-describedby="phone">
+						  <span class="input-group-addon" id="phoneSp">전화번호</span>
+						  <input id="phone" name="phone" type="tel" maxlength="11" class="form-control" value="${memberVO.phone }" required placeholder="전화번호를 -를 제외하고 입력하세요" aria-describedby="phoneSp">
 						</div>
 					</div>
 				</div>
@@ -75,8 +75,8 @@
 				<div class="form-group">
 					<div class=".col-xs-12 .col-md-8">
 						<div class="input-group">
-						  <span class="input-group-addon" id="birth">생일</span>
-						  <input name="birth" type="date" class="form-control" value="${memberVO.birth }" aria-describedby="birth">
+						  <span class="input-group-addon" id="birthSp">생일</span>
+						  <input id="birth" name="birth" type="date" class="form-control" value="${memberVO.birth }" aria-describedby="birthSp">
 						</div>
 					</div>
 				</div>
@@ -98,7 +98,7 @@
 				<div class="form-group">
 					<div class=".col-xs-12 .col-md-8">
 						<div class="input-group">	
-							<input class="btn btn-primary" type="submit" value="저장">
+							<input id="member_update_btn_update" class="btn btn-primary" type="submit" value="저장">
 							<input id="member_update_btn_delete" class="btn btn-danger" type="button" value="탈퇴하기">
 						</div>
 					</div>
@@ -170,6 +170,31 @@
 
   	<script type="text/javascript">
 		$(document).ready(function(){
+			var today = new Date();
+	  		var year = today.getFullYear();
+			$("#member_update_btn_update").click(function(e) {
+				
+				var phone = $("#phone").val();
+				var phoneStart = phone.substring(0,2);
+				var birth = $("#birth").val();
+				var birthYear= birth.substring(0,birth.indexOf("-"));
+				var age = Number(year)-Number(birthYear);
+				
+				if(isNaN(phone) || phone.length != 11 || phone.length != $.trim(phone).length || phoneStart !="01" ){// 문자 입력 체크
+					alert("잘못된 전화번호: 전화번호를 옮바르게 입력해주세요");
+					$("#phone").select();
+					event.preventDefault();
+					return;
+				}else if(age <=0 || age > 150){
+					alert("생년월일이 잘못되었습니다");
+					$("#birth").select();
+					event.preventDefault();
+					return;
+				}
+								
+			});
+			
+			
 			$("#member_update_btn_delete").click(function(e) {
 				e.preventDefault();
 				var password= prompt("탈퇴확인: 비밀번호를 입력하세요");
@@ -183,7 +208,28 @@
 				}
 				$("#form").submit();
 				
-				
+			});
+			$("#pw_update").click(function() {
+				var id = "${login.id}";
+				var pw = prompt("변경할 비밀번호를 입력해주세요");
+				  $.ajax({
+	                  type : 'put',
+	                  url : "/member/update_pw",
+	                  headers : {
+	                     "Content-Type" : "application/json",
+	                     "X-HTTP-Method-Override" : "put"
+	                  },
+	                  data : JSON.stringify({
+	                	 pw : pw,
+	                	 id : id
+	                     
+	                  }),
+	                  dataType : "text",
+	                  success : function(result) {
+	                	  alert("비밀번호를 변경하였습니다.");
+	                  }
+	          
+						});
 			});
 			
 			

@@ -25,7 +25,7 @@ public class sMyPageController {
 		@Inject
 		private SMyPageService sService;
 	
-		
+		//관리자 페이지 검색기능
 		@RequestMapping(value = "/adminlist/{searchType}/{keyword}/{curPage}", method=RequestMethod.GET)
 		public String adminlist(@PathVariable("searchType") String searchType,
 				@PathVariable("keyword") String keyword,

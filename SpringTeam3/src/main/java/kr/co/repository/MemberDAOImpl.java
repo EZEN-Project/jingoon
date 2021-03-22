@@ -1,5 +1,7 @@
 package kr.co.repository;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -66,5 +68,33 @@ public class MemberDAOImpl implements MemberDAO{
 		sqlSession.update(NS+".updateMType", vo);
 		
 	}
+
+	@Override
+	public MemberVO readMember(String id) {
+		// TODO Auto-generated method stub
+		MemberVO vo = sqlSession.selectOne(NS+".readMember", id); //괄호안의 물음표를 콤마뒤에 쓰는거임
+		return vo;
+	}
+
+	@Override
+	public int tempPw(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(NS+".tempPw", vo);
+	}
+	@Override
+	public String findid(String email) throws Exception{
+		return sqlSession.selectOne(NS+".findid", email);
+	}
+
+	@Override
+	public void updatepw(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		
+		sqlSession.update(NS+".updatepw", map);
+	}
+
+	
+
+
 
 }

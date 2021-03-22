@@ -14,25 +14,31 @@ public class QnABoardVO implements Serializable{
 	private String title;
 	private String	writer;
 	private String	content;
-	private int veiwcnt;
+	private int viewcnt;
 	private Date regdate;
 	private Date updatedate;
+	private int replyCnt;
 	
 	public QnABoardVO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public QnABoardVO(int bnum, String title, String writer, String content, int veiwcnt, Date regdate,
+	public QnABoardVO(int bnum, String title, String writer, String content, int viewcnt, Date regdate,
 			Date updatedate) {
 		super();
 		this.bnum = bnum;
 		this.title = title;
 		this.writer = writer;
 		this.content = content;
-		this.veiwcnt = veiwcnt;
+		this.viewcnt = viewcnt;
 		this.regdate = regdate;
 		this.updatedate = updatedate;
 	}
+	
+
+	
+
+	
 
 	public int getBnum() {
 		return bnum;
@@ -66,12 +72,12 @@ public class QnABoardVO implements Serializable{
 		this.content = content;
 	}
 
-	public int getVeiwcnt() {
-		return veiwcnt;
+	public int getViewcnt() {
+		return viewcnt;
 	}
 
-	public void setVeiwcnt(int veiwcnt) {
-		this.veiwcnt = veiwcnt;
+	public void setViewcnt(int viewcnt) {
+		this.viewcnt = viewcnt;
 	}
 
 	public Date getRegdate() {
@@ -88,6 +94,14 @@ public class QnABoardVO implements Serializable{
 
 	public void setUpdatedate(Date updatedate) {
 		this.updatedate = updatedate;
+	}
+
+	public int getReplyCnt() {
+		return replyCnt;
+	}
+
+	public void setReplyCnt(int replyCnt) {
+		this.replyCnt = replyCnt;
 	}
 
 	public static long getSerialversionuid() {

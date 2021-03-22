@@ -56,7 +56,7 @@
 					<div class=".col-xs-12 .col-md-8">
 						<div class="input-group">
 						  <span class="input-group-addon" id="pw1">비빌번호</span>
-						  <input name="pw" type="password" class="form-control"  placeholder="Password" aria-describedby="pw1">
+						  <input name="pw" type="password" class="form-control" required placeholder="Password" aria-describedby="pw1">
 						</div>
 					</div>
 				</div>
@@ -65,7 +65,7 @@
 					<div class=".col-xs-12 .col-md-8">
 						<div class="input-group">
 						  <span class="input-group-addon" id="pw2">비빌번호확인</span>
-						  <input name="pw2" type="password" class="form-control"  placeholder="Password" aria-describedby="pw2">
+						  <input name="pw2" type="password" class="form-control" required placeholder="Password" aria-describedby="pw2">
 						</div>
 					</div>
 				</div>
@@ -73,8 +73,8 @@
 				<div class="form-group">
 					<div class=".col-xs-12 .col-md-8">
 						<div class="input-group">
-						  <span class="input-group-addon" id="name">이름</span>
-						  <input name="name" type="text" class="form-control" required placeholder="이름을 입력하세요" aria-describedby="name">
+						  <span class="input-group-addon" id="nameSp">이름</span>
+						  <input id="name" name="name" type="text" class="form-control" required placeholder="2~4글자의 한글로 입력하세요" aria-describedby="nameSp">
 						</div>
 					</div>
 				</div>
@@ -82,8 +82,8 @@
 				<div class="form-group">
 					<div class=".col-xs-12 .col-md-8">
 						<div class="input-group">
-						  <span class="input-group-addon" id="phone">전화번호</span>
-						  <input name="phone" type="tel" maxlength="11" class="form-control" required placeholder="전화번호를 -를 제외하고 입력하세요" aria-describedby="phone">
+						  <span class="input-group-addon" id="phoneSp">전화번호</span>
+						  <input id="phone" name="phone" type="tel" maxlength="11" class="form-control" required placeholder="전화번호를 -를 제외하고 입력하세요" aria-describedby="phoneSp">
 						</div>
 					</div>
 				</div>
@@ -91,8 +91,8 @@
 				<div class="form-group">
 					<div class=".col-xs-12 .col-md-8">
 						<div class="input-group">
-						  <span class="input-group-addon" id="birth">생일</span>
-						  <input name="birth" type="date" class="form-control" aria-describedby="birth">
+						  <span class="input-group-addon" id="birthSp">생일</span>
+						  <input id="birth" name="birth" type="date" class="form-control" required aria-describedby="birthSp">
 						</div>
 					</div>
 				</div>
@@ -100,7 +100,7 @@
 				<div class="form-group">
 					<div class=".col-xs-12 .col-md-8">
 						<div class="input-group">
-							<input type="button" class="btn btn-default" onclick="sample4_execDaumPostcode()" value="주소 검색"><br>
+							<input type="button" id="addsearch" class="btn btn-default" onclick="sample4_execDaumPostcode()" value="주소 검색"><br>
 							<input type="text" class="form-control" id="sample4_postcode" readonly placeholder="우편번호"> 
 							<input type="text" class="form-control" name="address" id="sample4_roadAddress" required readonly placeholder="도로명주소"> 
 							<input type="hidden" class="form-control" id="sample4_jibunAddress" readonly placeholder="지번주소">
@@ -184,49 +184,82 @@
 </script>
 
   	<script type="text/javascript">
+  		var today = new Date();
+  		var year = today.getFullYear();
+  		  		
 		var a = false;// id중복체크 확인용
 		$(document).ready(function(){
 			$("input[type=submit]").click(function(event) {
-
+				
+				var address = $("#sample4_roadAddress").val();
 				var idn = $("input[name=id]").val();
 				var pw1 = $("input[name=pw]").val();
 				var pw2 = $("input[name=pw2]").val();
 				var namen = $("input[name=name]").val();
 				var idspan = $("#span1").text();
 				var ids = $.trim(idspan); // 공백 제거
-				if(ids != "사용 가능합니다"){ // 아이디 중복체크 검사
-					alert("id 중복체크를 해주세요");
-					$("#id").select();
+				var birth = $("#birth").val();
+				var birthYear= birth.substring(0,birth.indexOf("-"));
+				var phone = $("#phone").val();
+				var phoneStart = phone.substring(0,2);
+				var kor = /^[가-힣]{2,4}$/;
+				var idEng = /^[a-z|A-z|0-9]{4,12}$/;
+				
+				console.log((!kor.test(namen) || namen.length != $.trim(namen).length));
+				
+				if(!idEng.test(idn) || idn.length != $.trim(idn).length){
+					alert("id는 영문 숫자 4~12글자 사이로 입력해 주세요");
+					$("input[name=id]").select();
+					a= false;
 					event.preventDefault();
 					return;
-				} else if (!a) { //아이디 중복체크 
+				} else if(ids != "사용 가능합니다" || !a ){ // 아이디 중복체크 검사
 					alert("id 중복체크를 해주세요");
-					$("#id").select();
+					$("input[name=id]").select();
 					event.preventDefault();
 					return;
-				} else if (!idn) { //아이디 널체크
-					alert("id를 입력해주세요");
-					$("#id").select();
+				} else if(pw1.length < 4 || pw1.length != $.trim(pw1).length){
+					alert("비밀번호를 4자 이상으로 입력해주세요");
 					event.preventDefault();
 					return;
 				} else if (pw1 != pw2) {//비밀번호 체크
-					$("#pw1").focus(); // 커서가 깜박깜박
-					$("#pw2").select(); // 드래그 선택됨 
+					$("input[name=pw2]").select(); // 드래그 선택됨 
 					alert("비밀번호가 같지 않습니다.");
-					event.preventDefault();// 1+2
-					return;
-				} else if (!pw1) {
-					alert("비밀번호를 입력해주세요");
-					$("#pw1").select();
+					event.preventDefault();
+					return;			
+				} else if(!address){
+					alert("주소를 입력해주세요");
+					$("#addsearch").focus();
 					event.preventDefault();
 					return;
-				} else if(!namen){
-					alert("이름을 입력해주세요");
+				} else if((year-Number(birthYear)) <=0 || (year-Number(birthYear)) > 150){
+					alert("생년월일이 잘못되었습니다");
+					$("#birth").select();
+					event.preventDefault();
+					return;
+				} else if(isNaN(phone) || phone.length != 11 || phone.length != $.trim(phone).length ){// 문자 입력 체크
+					alert("잘못된 전화번호: 전화번호를 옮바르게 입력해주세요");
+					$("#phone").select();
+					event.preventDefault();
+					return;
+				} else if(phoneStart !="01") {
+					alert("잘못된 전화번호: 01로 시작하지 않음");
+					$("#phone").select();
+					event.preventDefault();
+					return;
+				}else if(!kor.test(namen) || namen.length != $.trim(namen).length){
+					alert("잘못된 이름: 2~4글자의 한글로 입력하세요");
 					$("#name").select();
 					event.preventDefault();
 					return;
 				}
-			
+				alert("서브밋");// test
+				event.preventDefault();
+				return;
+				
+				
+				
+							
 			});
 			$("#btnID").click(function(event) {
 				event.preventDefault(); 
@@ -238,7 +271,8 @@
 				$.getJSON("/member/idcheck/"+id, function(data) {
 					var result = data.result;
 					if(result == "o"){
-						$("#span1").text("사용 가능합니다")
+						$("#span1").text("사용 가능합니다");
+						$("#id").attr("readonly","readonly");
 					}else{
 						alert("중복된 아이디 입니다.");
 					}

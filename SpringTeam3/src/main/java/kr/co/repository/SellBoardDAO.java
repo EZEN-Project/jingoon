@@ -19,4 +19,14 @@ public interface SellBoardDAO {
 	public void delete(int bnum);
 
 	public void addAttach(String fullName, int bnum);
+
+	public List<SellBoardVO> list();
+
+	public void deleteFile(String fileName);
+
+	public void deleteFilesByBnum(int bnum);
+
+
+
+
 }

@@ -1,13 +1,13 @@
 package kr.co.service;
 
+
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
-
-import kr.co.domain.MemberVO;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.domain.SellVO;
 import kr.co.domain.TotalVO;
@@ -16,23 +16,14 @@ import kr.co.repository.MyPageDAO;
 public class MyPageServiceImpl implements MyPageService{
 	@Inject
 	private MyPageDAO dao;
-	@Override
-	public MemberVO updateUI(int mnum) {
-		// TODO Auto-generated method stub
-		MemberVO vo =dao.updateUI(mnum);
-		return vo;
-	}
-	@Override
-	public void update(MemberVO vo) {
-		// TODO Auto-generated method stub
-		dao.update(vo);
-	}
+
 	@Override
 	public List<SellVO> list(int sellnum) {
 		// TODO Auto-generated method stub
 		return dao.list(sellnum);
 	}
 	@Override
+	@Transactional
 	public void delete(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		dao.delete(map);
@@ -73,6 +64,12 @@ public class MyPageServiceImpl implements MyPageService{
 		
 		
 		return dao.chart_year();
+	}
+	@Override
+	@Transactional
+	public void allDelte(int mnum) {
+		// TODO Auto-generated method stub
+		dao.allDelete(mnum);
 	}
 
 

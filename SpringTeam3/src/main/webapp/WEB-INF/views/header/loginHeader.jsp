@@ -17,7 +17,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
-<script src="/resources/js/cart.js?vs=0.37" type="text/javascript"></script>
+<script src="/resources/js/cart.js?vs=0.39" type="text/javascript"></script>
 
 </head>
 <body>
@@ -26,7 +26,8 @@
 
 		<c:choose>
 			<c:when test="${empty login}">
-				<a href="/member/login">로그인</a>
+				<a href="/member/login">로그인</a>	/		
+				<a href="/member/insert">회원가입</a>
 			</c:when>
 			<c:otherwise>
 				<span><a href="/member/read">${login.name}</a> 님, 환영합니다.</span>
@@ -43,8 +44,18 @@
 		<a class="${login.mType == 1004 ? '' :'hidden' }" target="_blank" href="/mypage/sales">
 			<button class="btn btn-danger btn-md goSales" type="button">매출</button>
 		</a>
+<!-- 관리자페이지 버튼-->	
+		<a class="${login.mType == 1004 ? '' :'hidden' }" target="_black" href="/mypage/adminlist">
+			<button id="adminlist" type="button" class="btn btn-danger btn-md goSales">관리자</button>
+			</a>
+
+<!-- 판매글등록 버튼-->
+		<a class="${login.mType == 1004 ? '' :'hidden' }" target="_blank" href="/sellboard/insert">
+			<button class="btn btn-primary">판매글등록</button>
+		</a>
 <!-- 마이페이지 버튼 -->		
-		<a href="/mypage/mypage"><button class="btn btn-primary btn-md" type="button">
+
+		<a href="/mypage/mypage" class="${login.mType != 1004 ? '' :'hidden' }"><button class="btn btn-primary btn-md" type="button">
 			<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 		 	 마이페이지
 		</button></a>	
@@ -54,7 +65,8 @@
 		<ol class="breadcrumb">
 			<li><a href="/">HOME</a></li>
 		  	<li><a href="/sellboard/list">쇼핑</a></li>
-			<li class="${empty login ? 'hidden' : ''}"><a href="/mypage/list">결제내역</a></li>
+			<li class="${empty login ? 'hidden' : ''} ${login.mType != 1004 ? '' :'hidden' }"><a href="/mypage/list">결제내역</a></li>
+      		<li><a href="/qaboard/list">Q&A</a></li>
 		</ol>
 
 	</div>
